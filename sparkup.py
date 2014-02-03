@@ -8,6 +8,10 @@ import re
 
 # =============================================================================
 
+# Change them because angular dev is lame otherwise
+COUNT_INDENTIFIER = "\&"
+LOCAL_COUNT_IDENTIFIER = "\$"
+
 def iteritems(obj):
     """iteritems() in python2 and items() in python3"""
     if sys.version[0] == '2':
@@ -129,35 +133,35 @@ class HtmlDialect(Dialect):
                 '</html>'},
         'input:button': {
             'name': 'input',
-            'attributes': { 'class': 'button', 'type': 'button', 'name': '', 'value': '' }
+            'attributes': {'type': 'button'}
             },
         'input:password': {
             'name': 'input',
-            'attributes': { 'class': 'text password', 'type': 'password', 'name': '', 'value': '' }
+            'attributes': {'type': 'password'}
             },
         'input:radio': {
             'name': 'input',
-            'attributes': { 'class': 'radio', 'type': 'radio', 'name': '', 'value': '' }
+            'attributes': {'type': 'radio'}
             },
         'input:checkbox': {
             'name': 'input',
-            'attributes': { 'class': 'checkbox', 'type': 'checkbox', 'name': '', 'value': '' }
+            'attributes': {'type': 'checkbox'}
             },
         'input:file': {
             'name': 'input',
-            'attributes': { 'class': 'file', 'type': 'file', 'name': '', 'value': '' }
+            'attributes': {'type': 'file'}
             },
         'input:text': {
             'name': 'input',
-            'attributes': { 'class': 'text', 'type': 'text', 'name': '', 'value': '' }
+            'attributes': {'type':'text'}
             },
         'input:submit': {
             'name': 'input',
-            'attributes': { 'class': 'submit', 'type': 'submit', 'value': '' }
+            'attributes': {'type': 'submit'}
             },
         'input:hidden': {
             'name': 'input',
-            'attributes': { 'type': 'hidden', 'name': '', 'value': '' }
+            'attributes': {'type': 'hidden'}
             },
         'script:src': {
             'name': 'script',
@@ -287,7 +291,7 @@ class HtmlDialect(Dialect):
         'param':  {'name': '', 'value': ''},
         'form':   {'action': '', 'method': 'post'},
         'table':  {'cellspacing': '0'},
-        'input':  {'type': '', 'name': '', 'value': ''},
+        'input':  {'type': '', },
         'base':   {'href': ''},
         'area':   {'shape': '', 'coords': '', 'href': '', 'alt': ''},
         'select': {'name': ''},
@@ -544,9 +548,9 @@ class Element:
         if count is not None:
             for key in self.attributes:
                 attrib = self.attributes[key]
-                attrib = attrib.replace('&', ("%i" % count))
+                attrib = attrib.replace(COUNT_INDENTIFIER, ("%i" % count))
                 if local_count is not None:
-                    attrib = attrib.replace('$', ("%i" % local_count))
+                    attrib = attrib.replace(LOCAL_COUNT_IDENTIFIER, ("%i" % local_count))
                 self.attributes[key] = attrib
 
         # Copy over from parameters
